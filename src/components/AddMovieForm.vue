@@ -131,6 +131,13 @@ textarea {
   padding: 0.5rem;
   border: 1px solid var(--border-color);
   border-radius: 0.25rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
 }
 
 .actor-input {
@@ -139,13 +146,20 @@ textarea {
   margin-bottom: 0.5rem;
 }
 
+.actor-input input {
+  flex-grow: 1;
+}
+
 .btn-remove,
-.btn-add {
-  padding: 0.25rem 0.5rem;
+.btn-add,
+.btn-submit,
+.btn-cancel {
+  padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
   transition: opacity 0.3s ease;
+  font-size: 1rem;
 }
 
 .btn-remove {
@@ -156,6 +170,8 @@ textarea {
 .btn-add {
   background-color: var(--accent-color);
   color: white;
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 .category-checkbox {
@@ -167,15 +183,6 @@ textarea {
   justify-content: flex-end;
   gap: 1rem;
   margin-top: 1.5rem;
-}
-
-.btn-submit,
-.btn-cancel {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
 }
 
 .btn-submit {

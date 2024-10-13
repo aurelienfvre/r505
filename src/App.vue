@@ -49,6 +49,7 @@
 
     <main class="main-content">
       <router-view />
+
     </main>
 
     <footer class="footer">

@@ -1,5 +1,6 @@
 <template>
   <div class="login-form">
+    <h2>Connexion</h2>
     <form @submit.prevent="handleLogin">
       <div class="form-group">
         <label for="email">Email</label>
@@ -10,8 +11,11 @@
         <input type="password" id="password" v-model="password" required>
       </div>
       <button type="submit" class="btn-submit">Se connecter</button>
-      <p v-if="error" class="error-message">{{ error }}</p>
     </form>
+    <p v-if="error" class="error-message">{{ error }}</p>
+    <p class="forgot-password">
+      <a href="#" @click.prevent="forgotPassword">Mot de passe oublié ?</a>
+    </p>
   </div>
 </template>
 
@@ -37,24 +41,28 @@ export default {
       } catch (error) {
         this.error = 'Email ou mot de passe incorrect'
       }
+    },
+    forgotPassword() {
+      // Ici, vous pouvez implémenter la logique pour la réinitialisation du mot de passe
+      alert('Fonctionnalité de réinitialisation de mot de passe non implémentée.')
     }
   }
 }
 </script>
 
 <style scoped>
-.login-view {
-  padding: 2rem 0;
-}
-
-h1 {
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
 .login-form {
   max-width: 400px;
-  margin: 0 auto;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 
 .form-group {
@@ -64,6 +72,7 @@ h1 {
 label {
   display: block;
   margin-bottom: 0.5rem;
+  font-weight: bold;
 }
 
 input {
@@ -71,26 +80,35 @@ input {
   padding: 0.5rem;
   border: 1px solid var(--border-color);
   border-radius: 0.25rem;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
 .btn-submit {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.5rem;
   background-color: var(--accent-color);
   color: white;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  transition: opacity 0.3s ease;
-  margin-bottom: 1rem;
+  transition: background-color 0.3s;
+  font-size: 1rem;
 }
 
 .btn-submit:hover {
   opacity: 0.9;
 }
 
+.error-message {
+  color: #e74c3c;
+  margin-top: 1rem;
+  text-align: center;
+}
+
 .forgot-password {
   text-align: center;
+  margin-top: 1rem;
 }
 
 .forgot-password a {
