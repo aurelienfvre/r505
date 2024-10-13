@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import { createPinia, PiniaVuePlugin } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+import router from './router'
 
 Vue.use(PiniaVuePlugin)
 
@@ -10,5 +11,6 @@ pinia.use(piniaPluginPersistedstate)
 
 new Vue({
   render: h => h(App),
-  pinia
+  pinia,
+  router
 }).$mount('#app')

@@ -1,25 +1,25 @@
 <template>
-  <div id="search-film">
-    <h2>Recherche de Films</h2>
+  <div class="search-film">
     <div class="search-container">
       <input
           v-model="searchQuery"
           placeholder="Rechercher un film"
+          class="search-input"
           ref="searchInput"
       >
       <button @click="addNewFilm" class="add-film-btn">Ajouter un film</button>
     </div>
-    <p class="results-count">Nombre de résultats : {{ filteredFilms.length }}</p>
-    <ul class="film-list">
-      <li v-for="film in filteredFilms" :key="film.title" class="film-item">
+    <p class="results-count">{{ filteredFilms.length }} résultat(s)</p>
+    <div class="film-grid">
+      <div v-for="film in filteredFilms" :key="film.title" class="film-card">
         <img :src="film.poster" :alt="film.title" class="film-poster">
         <div class="film-details">
           <h3>{{ film.title }} ({{ film.year }})</h3>
           <p v-if="film.rating" class="film-rating">Note: {{ film.rating }}/10</p>
           <p v-if="film.director" class="film-director">Réalisateur: {{ film.director }}</p>
         </div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,50 +66,37 @@ export default {
         poster: 'https://via.placeholder.com/300x450.png?text=Nouveau+Film'
       }
       this.allFilms.push(newFilm)
-
-      // Ajouter une propriété de manière réactive
       this.$set(newFilm, 'rating', 8.5)
       this.$set(newFilm, 'director', 'John Doe')
-
-      console.log('Nouveau film ajouté:', newFilm)
     }
   },
   mounted() {
     this.$refs.searchInput.focus()
   }
 }
-</script>git init
-
+</script>
 
 <style scoped>
-#search-film {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+.search-film {
   font-family: Arial, sans-serif;
-}
-
-h2 {
-  color: #2c3e50;
-  margin-bottom: 20px;
 }
 
 .search-container {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
 }
 
-input {
+.search-input {
   flex-grow: 1;
-  padding: 10px;
-  font-size: 16px;
+  padding: 0.5rem;
+  font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
 .add-film-btn {
-  padding: 10px 20px;
-  margin-left: 10px;
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
   background-color: #3498db;
   color: white;
   border: none;
@@ -123,44 +110,47 @@ input {
 }
 
 .results-count {
-  margin-bottom: 20px;
+  margin-bottom: 1rem;
   font-style: italic;
   color: #7f8c8d;
 }
 
-.film-list {
-  list-style-type: none;
-  padding: 0;
+.film-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
 }
 
-.film-item {
-  display: flex;
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #f9f9f9;
+.film-card {
+  background-color: white;
   border-radius: 8px;
+  overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.film-card:hover {
+  transform: translateY(-5px);
 }
 
 .film-poster {
-  width: 100px;
-  height: 150px;
+  width: 100%;
+  height: 300px;
   object-fit: cover;
-  margin-right: 20px;
-  border-radius: 4px;
 }
 
 .film-details {
-  flex-grow: 1;
+  padding: 1rem;
 }
 
 .film-details h3 {
-  margin-top: 0;
-  color: #2c3e50;
+  margin: 0 0 0.5rem 0;
+  font-size: 1rem;
 }
 
 .film-rating, .film-director {
-  margin: 5px 0;
-  color: #34495e;
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #7f8c8d;
 }
 </style>
