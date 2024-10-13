@@ -1,17 +1,19 @@
 <template>
   <div class="actors-view">
-    <h1>Acteurs</h1>
-    <div class="search-bar">
-      <input v-model="searchQuery" placeholder="Rechercher un acteur" @input="searchActors">
-    </div>
-    <button @click="showAddActorForm = true" class="add-button">Ajouter un acteur</button>
-    <div class="actor-grid">
-      <ActorCard v-for="actor in paginatedActors" :key="actor.id" :actor="actor" />
-    </div>
-    <div class="pagination">
-      <button @click="previousPage" :disabled="currentPage === 1">Précédent</button>
-      <span>Page {{ currentPage }} sur {{ totalPages }}</span>
-      <button @click="nextPage" :disabled="currentPage === totalPages">Suivant</button>
+    <div class="container">
+      <h1>Acteurs</h1>
+      <div class="search-bar">
+        <input v-model="searchQuery" placeholder="Rechercher un acteur" @input="searchActors">
+        <button @click="showAddActorForm = true" class="btn-add">Ajouter un acteur</button>
+      </div>
+      <div class="actor-grid">
+        <ActorCard v-for="actor in paginatedActors" :key="actor.id" :actor="actor" />
+      </div>
+      <div class="pagination">
+        <button @click="previousPage" :disabled="currentPage === 1" class="btn-pagination">Précédent</button>
+        <span>Page {{ currentPage }} sur {{ totalPages }}</span>
+        <button @click="nextPage" :disabled="currentPage === totalPages" class="btn-pagination">Suivant</button>
+      </div>
     </div>
     <AddActorForm v-if="showAddActorForm" @close="showAddActorForm = false" @add-actor="addActor" />
   </div>
@@ -72,44 +74,83 @@ export default {
 
 <style scoped>
 .actors-view {
-  padding: 20px;
+  padding: 2rem 0;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .search-bar {
-  margin-bottom: 20px;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
 }
 
 .search-bar input {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
 }
 
-.add-button {
-  margin-bottom: 20px;
-  padding: 10px 20px;
+.btn-add {
+  padding: 0.5rem 1rem;
   background-color: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.btn-add:hover {
+  opacity: 0.9;
 }
 
 .actor-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .pagination {
-  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
-.pagination button {
-  margin: 0 10px;
-  padding: 5px 10px;
+.btn-pagination {
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.btn-pagination:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-pagination:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .actor-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <router-link :to="{ name: 'MovieDetail', params: { id: movie.id } }" class="movie-card">
-    <img :src="movie.poster" :alt="movie.title" class="movie-poster">
+    <div class="movie-poster">
+      <img :src="movie.poster" :alt="movie.title">
+    </div>
     <div class="movie-info">
       <h3>{{ movie.title }}</h3>
       <p>{{ movie.year }}</p>
@@ -22,13 +24,16 @@ export default {
 
 <style scoped>
 .movie-card {
-  width: 200px;
-  background-color: var(--secondary-color);
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
   overflow: hidden;
-  text-decoration: none;
-  color: var(--text-color);
   transition: transform 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  max-width: 200px;
 }
 
 .movie-card:hover {
@@ -36,8 +41,13 @@ export default {
 }
 
 .movie-poster {
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+}
+
+.movie-poster img {
   width: 100%;
-  height: 300px;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -54,15 +64,5 @@ p {
   margin: 0.5rem 0 0;
   font-size: 0.9rem;
   color: #666;
-}
-
-@media (max-width: 768px) {
-  .movie-card {
-    width: 150px;
-  }
-
-  .movie-poster {
-    height: 225px;
-  }
 }
 </style>

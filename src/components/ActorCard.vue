@@ -1,6 +1,8 @@
 <template>
   <router-link :to="{ name: 'ActorDetail', params: { id: actor.id } }" class="actor-card">
-    <img :src="actor.photo" :alt="actor.name" class="actor-photo">
+    <div class="actor-photo">
+      <img :src="actor.photo" :alt="actor.name">
+    </div>
     <div class="actor-info">
       <h3>{{ actor.name }}</h3>
     </div>
@@ -21,13 +23,16 @@ export default {
 
 <style scoped>
 .actor-card {
-  width: 200px;
-  background-color: var(--secondary-color);
-  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
   overflow: hidden;
-  text-decoration: none;
-  color: var(--text-color);
   transition: transform 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  max-width: 200px;
 }
 
 .actor-card:hover {
@@ -35,8 +40,13 @@ export default {
 }
 
 .actor-photo {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+.actor-photo img {
   width: 100%;
-  height: 200px;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -47,15 +57,6 @@ export default {
 h3 {
   margin: 0;
   font-size: 1rem;
-}
-
-@media (max-width: 768px) {
-  .actor-card {
-    width: 150px;
-  }
-
-  .actor-photo {
-    height: 150px;
-  }
+  text-align: center;
 }
 </style>

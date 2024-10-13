@@ -1,20 +1,26 @@
 <template>
   <div class="actor-detail-view" v-if="actor">
-    <h1>{{ actor.name }}</h1>
-    <div class="actor-info">
-      <img :src="actor.photo" :alt="actor.name" class="actor-photo">
-      <div class="actor-details">
-        <p><strong>Date de naissance:</strong> {{ actor.birthDate }}</p>
-        <p><strong>Nationalité:</strong> {{ actor.nationality }}</p>
-        <p><strong>Biographie:</strong> {{ actor.biography }}</p>
+    <div class="container">
+      <div class="actor-header">
+        <h1>{{ actor.name }}</h1>
+        <div class="actor-actions">
+          <button @click="showEditForm = true" class="btn-edit">Modifier</button>
+          <button @click="confirmDelete" class="btn-delete">Supprimer</button>
+        </div>
+      </div>
+      <div class="actor-content">
+        <img :src="actor.photo" :alt="actor.name" class="actor-photo">
+        <div class="actor-info">
+          <p><strong>Date de naissance:</strong> {{ actor.birthDate }}</p>
+          <p><strong>Nationalité:</strong> {{ actor.nationality }}</p>
+          <p><strong>Biographie:</strong> {{ actor.biography }}</p>
+        </div>
+      </div>
+      <h2>Filmographie</h2>
+      <div class="movie-grid">
+        <MovieCard v-for="movie in actor.movies" :key="movie.id" :movie="movie" />
       </div>
     </div>
-    <h2>Filmographie</h2>
-    <div class="movie-grid">
-      <MovieCard v-for="movie in actor.movies" :key="movie.id" :movie="movie" />
-    </div>
-    <button @click="showEditForm = true">Modifier l'acteur</button>
-    <button @click="confirmDelete">Supprimer l'acteur</button>
     <EditActorForm v-if="showEditForm" :actor="actor" @close="showEditForm = false" @update-actor="updateActor" />
   </div>
 </template>
@@ -78,42 +84,85 @@ export default {
 
 <style scoped>
 .actor-detail-view {
-  padding: 20px;
+  padding: 2rem 0;
 }
 
-.actor-info {
+.actor-header {
   display: flex;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.actor-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.btn-edit {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+  opacity: 0.9;
+}
+
+.actor-content {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .actor-photo {
   width: 300px;
   height: auto;
-  margin-right: 20px;
+  border-radius: 0.5rem;
 }
 
-.actor-details {
-  flex-grow: 1;
+.actor-info {
+  flex: 1;
+}
+
+h2 {
+  margin-bottom: 1rem;
 }
 
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  gap: 1rem;
 }
 
-button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+@media (max-width: 768px) {
+  .actor-content {
+    flex-direction: column;
+  }
 
-button:hover {
-  opacity: 0.9;
+  .actor-photo {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }
 </style>

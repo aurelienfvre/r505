@@ -1,21 +1,27 @@
 <template>
   <div class="movie-detail-view" v-if="movie">
-    <h1>{{ movie.title }}</h1>
-    <div class="movie-info">
-      <img :src="movie.poster" :alt="movie.title" class="movie-poster">
-      <div class="movie-details">
-        <p><strong>Année:</strong> {{ movie.year }}</p>
-        <p><strong>Réalisateur:</strong> {{ movie.director }}</p>
-        <p><strong>Catégories:</strong> {{ movie.categories.join(', ') }}</p>
-        <p><strong>Synopsis:</strong> {{ movie.synopsis }}</p>
+    <div class="container">
+      <div class="movie-header">
+        <h1>{{ movie.title }}</h1>
+        <div class="movie-actions">
+          <button @click="showEditForm = true" class="btn-edit">Modifier</button>
+          <button @click="confirmDelete" class="btn-delete">Supprimer</button>
+        </div>
+      </div>
+      <div class="movie-content">
+        <img :src="movie.poster" :alt="movie.title" class="movie-poster">
+        <div class="movie-info">
+          <p><strong>Année:</strong> {{ movie.year }}</p>
+          <p><strong>Réalisateur:</strong> {{ movie.director }}</p>
+          <p><strong>Catégories:</strong> {{ movie.categories.join(', ') }}</p>
+          <p><strong>Synopsis:</strong> {{ movie.synopsis }}</p>
+        </div>
+      </div>
+      <h2>Acteurs</h2>
+      <div class="actor-grid">
+        <ActorCard v-for="actor in movie.actors" :key="actor.id" :actor="actor" />
       </div>
     </div>
-    <h2>Acteurs</h2>
-    <div class="actor-grid">
-      <ActorCard v-for="actor in movie.actors" :key="actor.id" :actor="actor" />
-    </div>
-    <button @click="showEditForm = true">Modifier le film</button>
-    <button @click="confirmDelete">Supprimer le film</button>
     <EditMovieForm v-if="showEditForm" :movie="movie" @close="showEditForm = false" @update-movie="updateMovie" />
   </div>
 </template>
@@ -53,15 +59,15 @@ export default {
         synopsis: 'A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O.',
         poster: 'url_to_poster',
         actors: [
-          { id: 1, name: 'Leonardo DiCaprio', photo: 'url_to_photo' },
-          { id: 2, name: 'Joseph Gordon-Levitt', photo: 'url_to_photo' },
-          { id: 3, name: 'Ellen Page', photo: 'url_to_photo' }
+          {id: 1, name: 'Leonardo DiCaprio', photo: 'url_to_photo'},
+          {id: 2, name: 'Joseph Gordon-Levitt', photo: 'url_to_photo'},
+          {id: 3, name: 'Ellen Page', photo: 'url_to_photo'}
         ]
       }
     },
     updateMovie(updatedMovie) {
       // This should update the movie in your API
-      this.movie = { ...this.movie, ...updatedMovie }
+      this.movie = {...this.movie, ...updatedMovie}
       this.showEditForm = false
     },
     confirmDelete() {
@@ -72,7 +78,7 @@ export default {
     deleteMovie() {
       // This should delete the movie from your API
       // Then redirect to the movies list
-      this.$router.push({ name: 'Movies' })
+      this.$router.push({name: 'Movies'})
     }
   }
 }
@@ -80,42 +86,85 @@ export default {
 
 <style scoped>
 .movie-detail-view {
-  padding: 20px;
+  padding: 2rem 0;
 }
 
-.movie-info {
+.movie-header {
   display: flex;
-  margin-bottom: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.movie-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-edit,
+.btn-delete {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.btn-edit {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.btn-delete {
+  background-color: #ef4444;
+  color: white;
+}
+
+.btn-edit:hover,
+.btn-delete:hover {
+  opacity: 0.9;
+}
+
+.movie-content {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .movie-poster {
   width: 300px;
   height: auto;
-  margin-right: 20px;
+  border-radius: 0.5rem;
 }
 
-.movie-details {
-  flex-grow: 1;
+.movie-info {
+  flex: 1;
+}
+
+h2 {
+  margin-bottom: 1rem;
 }
 
 .actor-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
+  gap: 1rem;
 }
 
-button {
-  margin-right: 10px;
-  padding: 10px 20px;
-  background-color: var(--accent-color);
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+@media (max-width: 768px) {
+  .movie-content {
+    flex-direction: column;
+  }
 
-button:hover {
-  opacity: 0.9;
+  .movie-poster {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
 }
 </style>

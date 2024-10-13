@@ -9,7 +9,7 @@
         <label for="password">Mot de passe</label>
         <input type="password" id="password" v-model="password" required>
       </div>
-      <button type="submit" class="submit-btn">Se connecter</button>
+      <button type="submit" class="btn-submit">Se connecter</button>
       <p v-if="error" class="error-message">{{ error }}</p>
     </form>
   </div>
@@ -30,11 +30,11 @@ export default {
   },
   methods: {
     ...mapActions(useSession, ['login']),
-    handleLogin() {
-      if (this.email === 'test@test.com' && this.password === 'test1234') {
-        this.login({ user: { email: this.email } })
+    async handleLogin() {
+      try {
+        await this.login({ email: this.email, password: this.password })
         this.$router.push('/search')
-      } else {
+      } catch (error) {
         this.error = 'Email ou mot de passe incorrect'
       }
     }
@@ -43,11 +43,18 @@ export default {
 </script>
 
 <style scoped>
+.login-view {
+  padding: 2rem 0;
+}
+
+h1 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
 .login-form {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .form-group {
@@ -57,33 +64,41 @@ export default {
 label {
   display: block;
   margin-bottom: 0.5rem;
-  font-weight: bold;
 }
 
 input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 0.25rem;
 }
 
-.submit-btn {
+.btn-submit {
   width: 100%;
   padding: 0.75rem;
-  background-color: #3498db;
+  background-color: var(--accent-color);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: opacity 0.3s ease;
+  margin-bottom: 1rem;
 }
 
-.submit-btn:hover {
-  background-color: #2980b9;
+.btn-submit:hover {
+  opacity: 0.9;
 }
 
-.error-message {
-  color: #e74c3c;
-  margin-top: 1rem;
+.forgot-password {
+  text-align: center;
+}
+
+.forgot-password a {
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
 }
 </style>

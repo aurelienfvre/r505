@@ -7,9 +7,15 @@ export const useSession = defineStore('session', {
         loggedIn: false
     }),
     actions: {
-        login({ user }) {
-            this.loggedIn = true;
-            this.user = user;
+        login(credentials) {
+            // Ici, vous devriez normalement faire une requête à votre API pour vérifier les identifiants
+            if (credentials.email === 'test@test.com' && credentials.password === 'test1234') {
+                this.loggedIn = true;
+                this.user = { email: credentials.email };
+                return Promise.resolve();
+            } else {
+                return Promise.reject('Identifiants invalides');
+            }
         },
         logout() {
             this.loggedIn = false;
