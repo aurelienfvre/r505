@@ -47,9 +47,9 @@
       </div>
     </header>
 
-    <main class="main-content">
-      <router-view />
-
+    <main class="contenu-principal">
+      <router-view v-if="$route.name" />
+      <router-view v-else name="Home" />
     </main>
 
     <footer class="footer">
@@ -70,11 +70,20 @@ export default {
     return {
       isDarkMode: false,
       isMenuOpen: false,
-      isDropdownOpen: false
+      isDropdownOpen: false,
+      isReady: false,
     }
   },
   computed: {
     ...mapState(useSession, ['loggedIn', 'user'])
+  },
+  created() {
+    this.$nextTick(() => {
+      this.isReady = true;
+      if (this.$route.path === "/" && !this.$route.name) {
+        this.$router.push({ name: "Home" });
+      }
+    });
   },
   methods: {
     ...mapActions(useSession, ['logout']),
@@ -93,7 +102,14 @@ export default {
       this.$router.push('/login')
       this.isDropdownOpen = false
     }
-  }
+  },
+  watch: {
+    $route(to) {
+      if (to.path === "/" && !to.name) {
+        this.$router.push({ name: "Home" });
+      }
+    },
+  },
 }
 </script>
 
