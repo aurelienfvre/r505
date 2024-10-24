@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import AuthService from '@/services/auth.service'
 
 export const useSession = defineStore('session', {
     persist: true,
@@ -7,19 +8,25 @@ export const useSession = defineStore('session', {
         loggedIn: false
     }),
     actions: {
-        login(credentials) {
-            // Ici, vous devriez normalement faire une requête à votre API pour vérifier les identifiants
-            if (credentials.email === 'test@test.com' && credentials.password === 'test1234') {
-                this.loggedIn = true;
-                this.user = { email: credentials.email };
-                return Promise.resolve();
-            } else {
-                return Promise.reject('Identifiants invalides');
+        async login({ email, password }) {
+            try {
+                const response = await AuthService.login(email, password)
+                this.loggedIn = true
+                this.user = {
+                    email: email,
+                    token: response.token
+                }
+                return Promise.resolve()
+            } catch (error) {
+                this.loggedIn = false
+                this.user = null
+                return Promise.reject(error)
             }
         },
         logout() {
-            this.loggedIn = false;
-            this.user = null;
+            AuthService.logout()
+            this.loggedIn = false
+            this.user = null
         }
     }
-});
+})

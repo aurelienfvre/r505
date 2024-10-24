@@ -10,7 +10,9 @@
         <label for="password">Mot de passe</label>
         <input type="password" id="password" v-model="password" required>
       </div>
-      <button type="submit" class="btn-submit">Se connecter</button>
+      <button type="submit" class="btn-submit" :disabled="loading">
+        {{ loading ? 'Connexion...' : 'Se connecter' }}
+      </button>
     </form>
     <p v-if="error" class="error-message">{{ error }}</p>
     <p class="forgot-password">
@@ -29,22 +31,27 @@ export default {
     return {
       email: '',
       password: '',
-      error: ''
+      error: '',
+      loading: false
     }
   },
   methods: {
     ...mapActions(useSession, ['login']),
     async handleLogin() {
+      this.loading = true
+      this.error = ''
       try {
         await this.login({ email: this.email, password: this.password })
-        this.$router.push('/search')
+        this.$router.push('/')
       } catch (error) {
-        this.error = 'Email ou mot de passe incorrect'
+        this.error = error.message || 'Erreur lors de la connexion'
+      } finally {
+        this.loading = false
       }
     },
     forgotPassword() {
-      // Ici, vous pouvez implémenter la logique pour la réinitialisation du mot de passe
-      alert('Fonctionnalité de réinitialisation de mot de passe non implémentée.')
+      // Implémentation future
+      alert('Fonctionnalité à venir')
     }
   }
 }

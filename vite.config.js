@@ -18,7 +18,14 @@ export default defineConfig({
     }
   },
   server: {
-    port: 3000
+    port: 3000,
+    cors: true
   },
-  base: '/'
+  optimizeDeps: {
+    include: ['jwt-decode', 'graphql']
+  },
+  base: '/',
+  define: {
+    'process.env': {}
+  }
 })
