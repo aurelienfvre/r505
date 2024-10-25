@@ -1,53 +1,55 @@
 <template>
   <div class="login-form">
-    <h2>Connexion</h2>
     <form @submit.prevent="handleLogin">
       <div class="form-group">
         <label for="email">Email</label>
-        <input type="email" id="email" v-model="email" required>
+        <input type="email" id="email" v-model="email" required />
       </div>
       <div class="form-group">
         <label for="password">Mot de passe</label>
-        <input type="password" id="password" v-model="password" required>
+        <input type="password" id="password" v-model="password" required />
       </div>
-      <button type="submit" class="btn-submit">Se connecter</button>
+      <button type="submit" class="btn-submit" :disabled="loading">
+        {{ loading ? "Connexion..." : "Se connecter" }}
+      </button>
+      <p v-if="error" class="error-message">{{ error }}</p>
     </form>
-    <p v-if="error" class="error-message">{{ error }}</p>
-    <p class="forgot-password">
-      <a href="#" @click.prevent="forgotPassword">Mot de passe oublié ?</a>
-    </p>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'pinia'
-import { useSession } from '@/stores/session'
+import { mapActions } from "pinia";
+import { useSession } from "@/stores/session";
 
 export default {
-  name: 'LoginForm',
+  name: "LoginForm",
   data() {
     return {
-      email: '',
-      password: '',
-      error: ''
-    }
+      email: "",
+      password: "",
+      error: "",
+      loading: false,
+    };
   },
   methods: {
-    ...mapActions(useSession, ['login']),
+    ...mapActions(useSession, ["login"]),
     async handleLogin() {
+      this.loading = true;
+      this.error = "";
       try {
-        await this.login({ email: this.email, password: this.password })
-        this.$router.push('/search')
+        await this.login({
+          email: this.email,
+          password: this.password,
+        });
+        this.$router.push("/");
       } catch (error) {
-        this.error = 'Email ou mot de passe incorrect'
+        this.error = error.message || "Erreur de connexion";
+      } finally {
+        this.loading = false;
       }
     },
-    forgotPassword() {
-      // Ici, vous pouvez implémenter la logique pour la réinitialisation du mot de passe
-      alert('Fonctionnalité de réinitialisation de mot de passe non implémentée.')
-    }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
