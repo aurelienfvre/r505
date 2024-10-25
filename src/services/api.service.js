@@ -10,7 +10,6 @@ const api = axios.create({
   },
 });
 
-// Intercepteur pour les requêtes
 api.interceptors.request.use(
   (config) => {
     const token = AuthService.getToken();
@@ -22,7 +21,6 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Intercepteur pour les réponses
 api.interceptors.response.use(
   (response) => response,
   (error) => {

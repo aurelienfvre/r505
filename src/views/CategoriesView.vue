@@ -404,7 +404,6 @@ h1 {
   opacity: 0.9;
 }
 
-/* Modal styles */
 .modal-backdrop {
   position: fixed;
   top: 0;

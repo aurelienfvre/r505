@@ -24,8 +24,6 @@ class AuthService {
       if (response.data.token) {
         const token = response.data.token;
         localStorage.setItem("token", token);
-
-        // Configure les headers par défaut
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
         return {

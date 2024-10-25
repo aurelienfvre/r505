@@ -5,15 +5,22 @@
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="name">Nom de la catégorie</label>
-          <input id="name" v-model="editedCategory.name" type="text" required>
+          <input id="name" v-model="editedCategory.name" type="text" required />
         </div>
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea id="description" v-model="editedCategory.description"></textarea>
+          <textarea
+            id="description"
+            v-model="editedCategory.description"
+          ></textarea>
         </div>
         <div class="form-actions">
-          <button type="submit" class="btn-submit">Mettre à jour la catégorie</button>
-          <button type="button" @click="$emit('close')" class="btn-cancel">Annuler</button>
+          <button type="submit" class="btn-submit">
+            Mettre à jour la catégorie
+          </button>
+          <button type="button" @click="$emit('close')" class="btn-cancel">
+            Annuler
+          </button>
         </div>
       </form>
     </div>
@@ -22,26 +29,26 @@
 
 <script>
 export default {
-  name: 'EditCategoryForm',
+  name: "EditCategoryForm",
   props: {
     category: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
-      editedCategory: {...this.category}
-    }
+      editedCategory: { ...this.category },
+    };
   },
   methods: {
     submitForm() {
       // Ici, vous devriez envoyer les données mises à jour de la catégorie à votre API
-      this.$emit('update-category', this.editedCategory)
-      this.$emit('close')
-    }
-  }
-}
+      this.$emit("update-category", this.editedCategory);
+      this.$emit("close");
+    },
+  },
+};
 </script>
 
 <style scoped>

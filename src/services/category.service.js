@@ -29,8 +29,6 @@ class CategoryService {
       });
 
       const categoryData = response.data;
-
-      // Récupérer les détails des films associés
       const movies = await Promise.all(
         categoryData.movies.map(async (movieUrl) => {
           const movieId = movieUrl.split("/").pop();
