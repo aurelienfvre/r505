@@ -5,7 +5,7 @@
       <form @submit.prevent="submitForm">
         <div class="form-group">
           <label for="name">Nom de la catégorie</label>
-          <input id="name" v-model="category.name" type="text" required>
+          <input id="name" v-model="category.name" type="text" required />
         </div>
         <div class="form-group">
           <label for="description">Description</label>
@@ -13,7 +13,9 @@
         </div>
         <div class="form-actions">
           <button type="submit" class="btn-submit">Ajouter la catégorie</button>
-          <button type="button" @click="$emit('close')" class="btn-cancel">Annuler</button>
+          <button type="button" @click="$emit('close')" class="btn-cancel">
+            Annuler
+          </button>
         </div>
       </form>
     </div>
@@ -22,23 +24,23 @@
 
 <script>
 export default {
-  name: 'AddCategoryForm',
+  name: "AddCategoryForm",
   data() {
     return {
       category: {
-        name: '',
-        description: ''
-      }
-    }
+        name: "",
+        description: "",
+      },
+    };
   },
   methods: {
     submitForm() {
       // Ici, vous devriez envoyer les données de la catégorie à votre API
-      this.$emit('add-category', this.category)
-      this.$emit('close')
-    }
-  }
-}
+      this.$emit("add-category", this.category);
+      this.$emit("close");
+    },
+  },
+};
 </script>
 
 <style scoped>

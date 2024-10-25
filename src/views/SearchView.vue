@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import SearchFilm from '@/components/SearchFilm.vue'
+import SearchFilm from "@/components/SearchFilm.vue";
 
 export default {
-  name: 'SearchView',
+  name: "SearchView",
   components: {
-    SearchFilm
-  }
-}
+    SearchFilm,
+  },
+};
 </script>
 
 <style scoped>

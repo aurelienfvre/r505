@@ -5,56 +5,60 @@
       <form @submit.prevent="updateProfile" class="profile-form">
         <div class="form-group">
           <label for="email">Email</label>
-          <input id="email" v-model="profile.email" type="email" required>
+          <input id="email" v-model="profile.email" type="email" required />
         </div>
         <div class="form-group">
           <label for="name">Nom</label>
-          <input id="name" v-model="profile.name" type="text" required>
+          <input id="name" v-model="profile.name" type="text" required />
         </div>
         <div class="form-group">
-          <label for="password">Nouveau mot de passe (laisser vide pour ne pas changer)</label>
-          <input id="password" v-model="profile.newPassword" type="password">
+          <label for="password"
+            >Nouveau mot de passe (laisser vide pour ne pas changer)</label
+          >
+          <input id="password" v-model="profile.newPassword" type="password" />
         </div>
-        <button type="submit" class="btn-submit">Mettre à jour le profil</button>
+        <button type="submit" class="btn-submit">
+          Mettre à jour le profil
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'pinia'
-import { useSession } from '@/stores/session'
+import { mapState, mapActions } from "pinia";
+import { useSession } from "@/stores/session";
 
 export default {
-  name: 'ProfileView',
+  name: "ProfileView",
   data() {
     return {
       profile: {
-        email: '',
-        name: '',
-        newPassword: ''
-      }
-    }
+        email: "",
+        name: "",
+        newPassword: "",
+      },
+    };
   },
   computed: {
-    ...mapState(useSession, ['user'])
+    ...mapState(useSession, ["user"]),
   },
   mounted() {
-    this.profile.email = this.user.email
-    this.profile.name = this.user.name
+    this.profile.email = this.user.email;
+    this.profile.name = this.user.name;
   },
   methods: {
-    ...mapActions(useSession, ['updateUser']),
+    ...mapActions(useSession, ["updateUser"]),
     async updateProfile() {
       try {
-        await this.updateUser(this.profile)
-        alert('Profil mis à jour avec succès')
+        await this.updateUser(this.profile);
+        alert("Profil mis à jour avec succès");
       } catch (error) {
-        alert('Erreur lors de la mise à jour du profil')
+        alert("Erreur lors de la mise à jour du profil");
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

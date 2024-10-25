@@ -1,25 +1,42 @@
 <template>
-  <router-link :to="{ name: 'MovieDetail', params: { id: movie.id } }" class="movie-card">
+  <router-link
+    :to="{ name: 'MovieDetail', params: { id: movie.id } }"
+    class="movie-card"
+  >
     <div class="movie-poster">
-      <img :src="movie.poster" :alt="movie.title">
+      <img
+        :src="movie.media || 'https://via.placeholder.com/300x450'"
+        :alt="movie.title"
+      />
     </div>
     <div class="movie-info">
       <h3>{{ movie.title }}</h3>
-      <p>{{ movie.year }}</p>
+      <p class="director">{{ movie.director }}</p>
+      <p class="year">{{ formatDate(movie.releaseDate) }}</p>
+      <div class="movie-rating" v-if="movie.rating">
+        <span class="stars">★</span>
+        {{ movie.rating }}/5
+      </div>
     </div>
   </router-link>
 </template>
 
 <script>
 export default {
-  name: 'MovieCard',
+  name: "MovieCard",
   props: {
     movie: {
       type: Object,
-      required: true
-    }
-  }
-}
+      required: true,
+    },
+  },
+  methods: {
+    formatDate(date) {
+      if (!date) return "";
+      return new Date(date).getFullYear();
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -32,8 +49,7 @@ export default {
   transition: transform 0.3s ease;
   text-decoration: none;
   color: inherit;
-  width: 100%;
-  max-width: 200px;
+  background-color: var(--background-color);
 }
 
 .movie-card:hover {
@@ -41,7 +57,8 @@ export default {
 }
 
 .movie-poster {
-  aspect-ratio: 2 / 3;
+  width: 100%;
+  height: 300px;
   overflow: hidden;
 }
 
@@ -57,12 +74,30 @@ export default {
 
 h3 {
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
 }
 
-p {
-  margin: 0.5rem 0 0;
+.director {
+  color: var(--text-color);
   font-size: 0.9rem;
-  color: #666;
+  margin: 0.25rem 0;
+}
+
+.year {
+  color: var(--text-color);
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin: 0.25rem 0;
+}
+
+.movie-rating {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.stars {
+  color: gold;
+  margin-right: 0.25rem;
 }
 </style>
