@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="modal-backdrop" @click.self="$emit('close')">
     <div class="modal-content">

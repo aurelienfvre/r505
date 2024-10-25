@@ -153,7 +153,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  padding-top: 4rem; /* Pour compenser le header fixed */
+  padding-top: 4rem;
 }
 
 .container {
@@ -373,7 +373,6 @@ body {
   z-index: 2;
 }
 
-/* Dark mode styles */
 .dark-mode {
   --background-color: #1f2937;
   --text-color: #f9fafb;
@@ -381,7 +380,6 @@ body {
   --hover-color: #374151;
 }
 
-/* Responsive styles */
 @media (max-width: 768px) {
   .header .container {
     flex-wrap: wrap;

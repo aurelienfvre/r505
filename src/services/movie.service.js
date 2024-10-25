@@ -33,8 +33,6 @@ class MovieService {
 
         const movies = response.data["hydra:member"];
         allMovies = [...allMovies, ...movies];
-
-        // Vérifier s'il y a une page suivante dans les liens hydra:view
         const hasNext =
           response.data["hydra:view"] &&
           response.data["hydra:view"]["hydra:next"];
@@ -44,8 +42,6 @@ class MovieService {
         } else {
           page++;
         }
-
-        // Log pour déboguer
         console.log(
           `Loaded page ${page - 1} with ${movies.length} movies. Total: ${
             allMovies.length
@@ -67,8 +63,6 @@ class MovieService {
       });
 
       const movieData = response.data;
-
-      // Récupérer les détails des acteurs
       const actors = await Promise.all(
         (movieData.actors || []).map(async (actorUrl) => {
           const actorId = actorUrl.split("/").pop();
@@ -86,8 +80,6 @@ class MovieService {
           }
         })
       );
-
-      // Récupérer les détails des catégories
       const categories = await Promise.all(
         (movieData.categories || []).map(async (categoryUrl) => {
           const categoryId = categoryUrl.split("/").pop();
@@ -146,8 +138,6 @@ class MovieService {
           headers: this.getHeaders(),
         }
       );
-
-      // Recharger le film créé avec toutes ses relations
       const newMovie = await this.getMovie(response.data.id);
       return newMovie;
     } catch (error) {

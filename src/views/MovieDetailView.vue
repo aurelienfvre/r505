@@ -460,7 +460,6 @@ h2 {
   font-weight: 500;
 }
 
-/* Modal styles */
 .modal-backdrop {
   position: fixed;
   top: 0;

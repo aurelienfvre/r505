@@ -15,8 +15,6 @@ export const useSession = defineStore("session", {
         this.token = result.token;
         this.user = result.user;
         this.loggedIn = true;
-
-        // Mettre à jour les en-têtes Axios
         AuthService.setupAxiosInterceptors();
 
         return Promise.resolve();

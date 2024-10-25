@@ -116,8 +116,6 @@ class ActorService {
         bio: actorData.bio,
         deathDate: actorData.deathDate,
       };
-
-      // Supprime les propriétés undefined ou null
       Object.keys(formattedActor).forEach((key) => {
         if (formattedActor[key] === undefined || formattedActor[key] === null) {
           delete formattedActor[key];
